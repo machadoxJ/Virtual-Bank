@@ -58,7 +58,7 @@ public class Main {
                 System.out.println("| 3. Depositar           |");
                 System.out.println("| 4. Transferir          |");
                 System.out.println("| 5. Sua Conta           |");
-                System.out.println("| 6. Sair                |");
+                System.out.println("| 6. Deslogar            |");
                 System.out.println("+========================+");
                 b = bancon.nextInt();
                 switch (b) {
