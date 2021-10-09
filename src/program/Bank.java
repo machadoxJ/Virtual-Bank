@@ -16,10 +16,7 @@ public class Bank {
     public void Saldo() {
 
         System.out.println();
-        System.out.println("Seu saldo:");
-        System.out.printf("%.2f", saldo);
-        System.out.print(" reais");
-        System.out.println();
+        System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
         System.out.println();
         System.out.println("enter...");
         String enter = banco.nextLine();
@@ -51,45 +48,35 @@ public class Bank {
                 System.out.println();
                 System.out.println("R$10.00 Foram sacados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 2:
                 valor = 20.0;
                 bankinfo.retirar(valor);
                 System.out.println();
                 System.out.println("R$20.00 Foram sacados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 3:
                 valor = 50.0;
                 bankinfo.retirar(valor);
                 System.out.println();
                 System.out.println("R$50.00 Foram sacados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 4:
                 valor = 100.0;
                 bankinfo.retirar(valor);
                 System.out.println();
                 System.out.println("R$100.00 Foram sacados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 5:
                 valor = 200.0;
                 bankinfo.retirar(valor);
                 System.out.println();
                 System.out.println("R$200.00 Foram sacados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 6: Main main = new Main(); main.inicio(); break;
             default: System.out.println("Opção invalida");
         }
@@ -121,45 +108,35 @@ public class Bank {
                 System.out.println();
                 System.out.println("R$10.00 Foram depositados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 2:
                 valor = 20.0;
                 bankinfo.adicionar(valor);
                 System.out.println();
                 System.out.println("R$20.00 Foram depositados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 3:
                 valor = 50.0;
                 bankinfo.adicionar(valor);
                 System.out.println();
                 System.out.println("R$50.00 Foram depositados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 4:
                 valor = 100.0;
                 bankinfo.adicionar(valor);
                 System.out.println();
                 System.out.println("R$100.00 Foram depositados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 5:
                 valor = 200.0;
                 bankinfo.adicionar(valor);
                 System.out.println();
                 System.out.println("R$200.00 Foram depositados com sucesso!");
                 Salving.gravarInfos();
-                System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
-                System.out.println();
-                main.banco();
+                Saldo();
             case 6: Main main = new Main(); main.inicio(); break;
             default: System.out.println("Opção invalida");
         }
@@ -210,13 +187,12 @@ public class Bank {
     public void Conta() {
 
         System.out.println();
-        System.out.println("Sua conta é: ");
+        System.out.println("Informações da conta: ");
         System.out.print("Nome: " + Loggin.getName());
         System.out.print("Senha: " + Loggin.getPassword());
         System.out.print("Idade: " + Loggin.getAge());
         System.out.print("Pais: " + Loggin.getCountry());
         System.out.print("Saldo: " + Bankinfo.getSaldo());
-        System.out.println();
         System.out.println();
         System.out.println("enter...");
         String enter = banco.nextLine();
