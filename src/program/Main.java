@@ -5,18 +5,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static int i;
-    private static int b;
+    private final Scanner sc = new Scanner(System.in);
 
-    public static void main (String[] args) {
-        Main main = new Main();
-        main.inicio();
-        if (i != 3) {main.banco();}
-    }
-    public int inicio() {
-        boolean ini = false;
-        while (!ini || i > 3 || i < 1) {
-            Scanner iniciar = new Scanner(System.in);
+    public static void main (String[] args) { Main main = new Main(); main.OptionsLogin(); }
+
+    public void OptionsLogin() {
+        boolean errologin = false;
+        int login = 0;
+        while (!errologin || login > 3 || login < 1) {
             try {
                 System.out.println();
                 System.out.println("+========================+");
@@ -27,26 +23,22 @@ public class Main {
                 System.out.println("| 2. Registrar           |");
                 System.out.println("| 3. Sair                |");
                 System.out.println("+========================+");
-                i = iniciar.nextInt();
-                ini = true;
-                switch (i) {
-                    case 1: Loggin login = new Loggin(); login.Login(); break;
-                    case 2: Loggin register = new Loggin(); register.Registrar(); break;
+                login = sc.nextInt();
+                errologin = true;
+                switch (login) {
+                    case 1: Registration startLogin = new Registration(); startLogin.startLogin(); break;
+                    case 2: Registration startRegister = new Registration(); startRegister.startRegister(); break;
                     case 3: break;
                     default: System.out.println("Opção invalida");
                 }
-            } catch (InputMismatchException e) {
-                String erro = iniciar.nextLine();
-                System.out.println("Você só pode colocar Numeros!!");
-            }
+            } catch (InputMismatchException e) { sc.nextLine(); System.out.println("Você só pode colocar Números!!"); }
         }
-        return i;
     }
-    public void banco() {
-        b = 0;
-        while (b > 6 || b < 1) {
-            Scanner bancon = new Scanner(System.in);
-            Bank bank = new Bank();
+
+    public void OptionsBank() {
+        int bank = 0;
+        BankApp bankApp = new BankApp();
+        while (bank > 6 || bank < 1) {
             try {
                 System.out.println();
                 System.out.println("+========================+");
@@ -60,19 +52,17 @@ public class Main {
                 System.out.println("| 5. Sua Conta           |");
                 System.out.println("| 6. Deslogar            |");
                 System.out.println("+========================+");
-                b = bancon.nextInt();
-                switch (b) {
-                    case 1: bank.Saldo(); break;
-                    case 2: Loggin register = new Loggin(); register.Registrar(); break;
-                    case 3: bank.Depositar(); break;
-                    case 4: bank.Transferir(); break;
-                    case 6: Main main = new Main(); main.inicio(); break;
+                bank = sc.nextInt();
+                switch (bank) {
+                    case 1: bankApp.Balance(); break;
+                    case 2: bankApp.Withdraw(); break;
+                    case 3: bankApp.Deposit(); break;
+                    case 4: bankApp.Transfer(); break;
+                    case 5: bankApp.Account(); break;
+                    case 6: Main main = new Main(); main.OptionsLogin(); break;
                     default: System.out.println("Opção invalida");
                 }
-            } catch (InputMismatchException e) {
-                String erro = bancon.nextLine();
-                System.out.println("Você só pode colocar Numeros!!");
-            }
+            } catch (InputMismatchException e) { sc.nextLine(); System.out.println("Você só pode colocar Números!!"); }
         }
     }
 }

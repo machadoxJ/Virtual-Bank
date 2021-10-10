@@ -1,28 +1,32 @@
 package program;
 
-import info.Bankinfo;
-import info.Salving;
+import information.BankInfo;
+import information.RegistrationInfo;
+import information.DataInfo;
 import java.util.Scanner;
 
+import static information.BankInfo.*;
+import static information.RegistrationInfo.*;
 
-public class Bank {
 
-    Scanner banco = new Scanner(System.in);
-    Main main = new Main();
-    private static double saldo = Bankinfo.getSaldo();
-    private String tempconta;
-    private String conta;
+public class BankApp {
 
-    public void Saldo() {
+    private final Scanner sc = new Scanner(System.in);
+    private final Main main = new Main();
+    private final BankInfo bankinfo = new BankInfo();
+    private final RegistrationInfo registrationinfo = new RegistrationInfo();
+    private static final double balance = getBalance();
+
+    public void Balance() {
 
         System.out.println();
-        System.out.printf("Saldo atual: %.2f", Bankinfo.getSaldo(), " reais");
+        System.out.printf("Saldo atual: %.2f", getBalance(), " reais");
         System.out.println();
         System.out.println("enter...");
-        String enter = banco.nextLine();
-        main.banco();
+        sc.nextLine();
+        main.OptionsBank();
     }
-    public void Sacar() {
+    public void Withdraw() {
 
         System.out.println();
         System.out.println("Quanto deseja sacar?");
@@ -38,51 +42,35 @@ public class Bank {
         System.out.println("| 5. R$200.00            |");
         System.out.println("| 6. Voltar              |");
         System.out.println("+========================+");
-        Bankinfo bankinfo = new Bankinfo();
-        int v = banco.nextInt();
-        Double valor = 0.0;
-        switch (v) {
+        int valores = sc.nextInt();
+        switch (valores) {
             case 1:
-                valor = 10.0;
-                bankinfo.retirar(valor);
+                bankinfo.withdraw(10.0);
                 System.out.println();
                 System.out.println("R$10.00 Foram sacados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 2:
-                valor = 20.0;
-                bankinfo.retirar(valor);
+                bankinfo.withdraw(20.0);
                 System.out.println();
                 System.out.println("R$20.00 Foram sacados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 3:
-                valor = 50.0;
-                bankinfo.retirar(valor);
+                bankinfo.withdraw(50.0);
                 System.out.println();
                 System.out.println("R$50.00 Foram sacados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 4:
-                valor = 100.0;
-                bankinfo.retirar(valor);
+                bankinfo.withdraw(100.0);
                 System.out.println();
                 System.out.println("R$100.00 Foram sacados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 5:
-                valor = 200.0;
-                bankinfo.retirar(valor);
+                bankinfo.withdraw(200.0);
                 System.out.println();
                 System.out.println("R$200.00 Foram sacados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
-            case 6: Main main = new Main(); main.inicio(); break;
+            case 6: main.OptionsBank(); break;
             default: System.out.println("Opção invalida");
         }
-
+        DataInfo.recorddata();
+        Balance();
     }
-    public void Depositar() {
+    public void Deposit() {
 
         System.out.println();
         System.out.println("Quanto deseja depositar?");
@@ -98,105 +86,86 @@ public class Bank {
         System.out.println("| 5. R$200.00            |");
         System.out.println("| 6. Voltar              |");
         System.out.println("+========================+");
-        Bankinfo bankinfo = new Bankinfo();
-        int v = banco.nextInt();
-        Double valor = 0.0;
-        switch (v) {
+        int valores = sc.nextInt();
+        switch (valores) {
             case 1:
-                valor = 10.0;
-                bankinfo.adicionar(valor);
+                bankinfo.add(10.0);
                 System.out.println();
                 System.out.println("R$10.00 Foram depositados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 2:
-                valor = 20.0;
-                bankinfo.adicionar(valor);
+                bankinfo.add(20.0);
                 System.out.println();
                 System.out.println("R$20.00 Foram depositados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 3:
-                valor = 50.0;
-                bankinfo.adicionar(valor);
+                bankinfo.add(50.0);
                 System.out.println();
                 System.out.println("R$50.00 Foram depositados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 4:
-                valor = 100.0;
-                bankinfo.adicionar(valor);
+                bankinfo.add(100.0);
                 System.out.println();
                 System.out.println("R$100.00 Foram depositados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
             case 5:
-                valor = 200.0;
-                bankinfo.adicionar(valor);
+                bankinfo.add(200.0);
                 System.out.println();
                 System.out.println("R$200.00 Foram depositados com sucesso!");
-                Salving.gravarInfos();
-                Saldo();
-            case 6: Main main = new Main(); main.inicio(); break;
+            case 6: Main main = new Main(); main.OptionsBank(); break;
             default: System.out.println("Opção invalida");
         }
+        DataInfo.recorddata();
+        Balance();
     }
-    public void Transferir() {
+    public void Transfer() {
 
         System.out.println();
         System.out.println("Quanto deseja transferir?");
-        double transferir = banco.nextDouble();
-        if (transferir > Bankinfo.getSaldo()) {
+        double transfer = sc.nextDouble();
+        //Irá ver se ele tem o saldo necessário para essa transferencia.
+        if (transfer > getBalance()) {
             System.out.println();
             System.out.println("Transferencia negada");
-            System.out.printf("Você tem apenas: %.2f", saldo, " reais");
+            System.out.printf("Você tem apenas: %.2f", balance, " reais");
         }
+        //Irá adicionar na conta mencionada e irá remover da conta logada.
         else {
             System.out.println();
             System.out.println("Para quem deseja transferir?");
             System.out.println("Digite o nome:");
-            conta = banco.next();
-            tempconta = Loggin.getName();
-            Loggin loggin = new Loggin();
-            Bankinfo bankinfo = new Bankinfo();
-            loggin.setRegister("b");
-            loggin.setName(conta);
-            Salving.lerInfos();
+            String account = sc.next();
+            String tempaccount = getName();
+            registrationinfo.setRegister("bank");
+            registrationinfo.setName(account);
+            DataInfo.readInfo();
 
+            //Adicionando e salvando saldo da pessoa mencionada.
             System.out.println();
-            bankinfo.adicionar(transferir);
+            bankinfo.add(transfer);
+            DataInfo.recorddata();
 
-            System.out.println();
-            Salving.gravarInfos();
-            loggin.setName(tempconta);
-
-            System.out.println();
-            Salving.lerInfos();
-            bankinfo.retirar(transferir);
-
-            System.out.println();
-            System.out.println("Transferencia concluida com sucesso!");
-            System.out.printf("Saldo restante em sua conta: %.2f", Bankinfo.getSaldo(), " reais");
-            Salving.gravarInfos();
+            //Removendo e salvando saldo da pessoa logada.
+            registrationinfo.setName(tempaccount);
+            DataInfo.readInfo();
+            bankinfo.withdraw(transfer);
+            System.out.println("Transferencia concluding com sucesso!");
+            System.out.printf("Saldo restante em sua conta é de: %.2f", balance, " reais");
+            DataInfo.recorddata();
         }
         System.out.println();
-        System.out.println();
-        System.out.println("Voltando..");
-        main.banco();
+        System.out.println("Voltando...");
+        main.OptionsBank();
     }
-    public void Conta() {
+    public void Account() {
 
         System.out.println();
         System.out.println("Informações da conta: ");
-        System.out.print("Nome: " + Loggin.getName());
-        System.out.print("Senha: " + Loggin.getPassword());
-        System.out.print("Idade: " + Loggin.getAge());
-        System.out.print("Pais: " + Loggin.getCountry());
-        System.out.print("Saldo: " + Bankinfo.getSaldo());
+        System.out.print("Nome: " + getName());
+        System.out.print("Senha: " + getPassword());
+        System.out.print("Idade: " + getAge());
+        System.out.print("Pais: " + getCountry());
+        System.out.print("Saldo: " + balance);
         System.out.println();
         System.out.println("enter...");
-        String enter = banco.nextLine();
-        main.banco();
+        sc.nextLine();
+        main.OptionsBank();
 
     }
 }
