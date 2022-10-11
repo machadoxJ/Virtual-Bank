@@ -1,13 +1,15 @@
-package program;
+package application;
+
+import model.register.Loggin;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Program {
 
     private final Scanner sc = new Scanner(System.in);
 
-    public static void main (String[] args) { Main main = new Main(); main.OptionsLogin(); }
+    public static void main (String[] args) { Program main = new Program(); main.OptionsLogin(); }
 
     public void OptionsLogin() {
         boolean errologin = false;
@@ -26,8 +28,8 @@ public class Main {
                 login = sc.nextInt();
                 errologin = true;
                 switch (login) {
-                    case 1: Registration startLogin = new Registration(); startLogin.startLogin(); break;
-                    case 2: Registration startRegister = new Registration(); startRegister.startRegister(); break;
+                    case 1: Loggin startLogin = new Loggin(); startLogin.startLogin(); break;
+                    case 2: Loggin startRegister = new Loggin(); startRegister.startRegister(); break;
                     case 3: break;
                     default: System.out.println("Opção invalida");
                 }
@@ -37,7 +39,7 @@ public class Main {
 
     public void OptionsBank() {
         int bank = 0;
-        BankApp bankApp = new BankApp();
+        model.bank.Program bankApp = new model.bank.Program();
         while (bank > 6 || bank < 1) {
             try {
                 System.out.println();
@@ -54,12 +56,12 @@ public class Main {
                 System.out.println("+========================+");
                 bank = sc.nextInt();
                 switch (bank) {
-                    case 1: bankApp.Balance(); break;
-                    case 2: bankApp.Withdraw(); break;
-                    case 3: bankApp.Deposit(); break;
-                    case 4: bankApp.Transfer(); break;
+                    case 1: bankApp.balance(); break;
+                    case 2: bankApp.withdraw(); break;
+                    case 3: bankApp.deposit(); break;
+                    case 4: bankApp.transfer(); break;
                     case 5: bankApp.Account(); break;
-                    case 6: Main main = new Main(); main.OptionsLogin(); break;
+                    case 6: Program main = new Program(); main.OptionsLogin(); break;
                     default: System.out.println("Opção invalida");
                 }
             } catch (InputMismatchException e) { sc.nextLine(); System.out.println("Você só pode colocar Números!!"); }

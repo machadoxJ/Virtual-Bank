@@ -1,6 +1,6 @@
-package information;
+package model.data;
 
-public class RegistrationInfo {
+public class Registration {
 
     //informações --
     private static String name;
@@ -13,23 +13,23 @@ public class RegistrationInfo {
     private static String block;
     private static String nameblock;
 
-    public RegistrationInfo() {
+    public Registration() {
 
     }
 
-    public void setName(String name){ RegistrationInfo.name = name; }
+    public void setName(String name){ Registration.name = name; }
     public static String getName(){ return name; }
-    public void setPassword(String password){ RegistrationInfo.password = password; }
+    public void setPassword(String password){ Registration.password = password; }
     public static String getPassword(){ return password; }
-    public void setAge(int age){ RegistrationInfo.age = age; }
+    public void setAge(int age){ Registration.age = age; }
     public static int getAge(){ return age; }
-    public void setCountry(String country){ RegistrationInfo.country = country; }
+    public void setCountry(String country){ Registration.country = country; }
     public static String getCountry(){ return country; }
-    public void setRegister(String register){ RegistrationInfo.register = register; }
+    public void setRegister(String register){ Registration.register = register; }
     public static String getRegister(){ return register;}
-    public void setBlock(String block){ RegistrationInfo.block = block; }
+    public void setBlock(String block){ Registration.block = block; }
     public static String getBlock(){ return block;}
-    public void setNameBlock(String nameblock){ RegistrationInfo.nameblock = nameblock; }
+    public void setNameBlock(String nameblock){ Registration.nameblock = nameblock; }
     public static String getNameBlock(){ return nameblock;}
 
 

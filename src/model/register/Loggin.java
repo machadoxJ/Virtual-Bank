@@ -1,27 +1,27 @@
-package program;
+package model.register;
 
-import information.RegisterInfo;
-import information.DataInfo;
-import information.RegistrationInfo;
+import application.Program;
+import model.saving.Saving;
+import model.data.Registration;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-import static information.RegistrationInfo.*;
+import static model.data.Registration.*;
 
 
-public class Registration {
+public class Loggin {
 
     private final Scanner sc = new Scanner(System.in);
-    private final Main main = new Main();
+    private final Program main = new Program();
 
     public void startRegister() {
         String finish;
         do {
-            RegisterInfo info = new RegisterInfo();
+            model.register.Registration info = new model.register.Registration();
             System.out.println();
             System.out.println("----------Register----------");
-            info.Register();
+            info.register();
             System.out.println();
             System.out.println("----------Dados----------");
             System.out.println("Seu nome: " + getName());
@@ -34,13 +34,13 @@ public class Registration {
             System.out.println("Digite 's'!");
             finish = sc.nextLine();
         } while (finish.equals("n"));
-        DataInfo.recorddata();
+        Saving.recordData();
         System.out.println("Cadastro feito!!");
         main.OptionsBank();
     }
 
     public void startLogin() {
-        RegistrationInfo registerinfo = new RegistrationInfo();
+        Registration registerinfo = new Registration();
         String register = "login";
         String password;
         int attempts = 0;
@@ -53,24 +53,18 @@ public class Registration {
 
             //Testará se a conta está bloqueada.
             String testblock = "block" + getName();
-            DataInfo.readInfo();
+            Saving.readData();
             if (Objects.equals(getName(), testblock)) {
                 System.out.println();
                 System.out.println("Essa conta está Bloqueada!!");
                 startLogin();
             }
 
-            System.out.println();
             System.out.println("Senha: ");
             password = sc.nextLine();
 
-            //Verá se a senha é verdadeira.
-            if (password.equals(information.RegistrationInfo.getPassword())) {
-                System.out.println();
-                System.out.println("Nome e senha válidos");
-            }
             //Mostrará opções para a senha invalida.
-            else {
+            if (!password.equals(Registration.getPassword())) {
                 attempts++;
                 System.out.println();
                 System.out.println("Nome ou senha inválidos");
@@ -87,12 +81,12 @@ public class Registration {
                         System.out.println();
                         System.out.println("Qual a idade foi colocada no registro?");
                         int age = sc.nextInt();
-                        if (age != information.RegistrationInfo.getAge()) {
+                        if (age != Registration.getAge()) {
                             System.out.println();
                             System.out.println("A idade inserida está incorreta!");
                             System.out.println("Conta bloqueada!!!");
-                            registerinfo.setName("bloqueada" + getName());
-                            DataInfo.recorddata();
+                            registerinfo.setName("block" + getName());
+                            Saving.recordData();
                             startLogin();
                         }
 
@@ -104,10 +98,10 @@ public class Registration {
                             System.out.println();
                             System.out.println("O país inserido está incorreto!");
                             System.out.println("Conta bloqueada!!!");
-                            String nameblock = "bloqueada" + getName();
+                            String nameblock = "block" + getName();
                             registerinfo.setBlock("y");
                             registerinfo.setNameBlock(nameblock);
-                            DataInfo.recorddata();
+                            Saving.recordData();
                             startLogin();
                         }
 
@@ -129,16 +123,18 @@ public class Registration {
                     }
                 } else if (attempts >= 10) {
                     System.out.println("Sua conta acabou de ser Bloqueada!!");
-                    String nameblock = "bloqueada" + getName();
+                    String nameblock = "block" + getName();
                     registerinfo.setBlock("y");
                     registerinfo.setNameBlock(nameblock);
-                    DataInfo.recorddata();
+                    Saving.recordData();
                     startLogin();
                 }
             }
-        } while (password.equals(information.RegistrationInfo.getPassword()));
+        //Verá se a senha é verdadeira.
+        } while (!password.equals(Registration.getPassword()));
         System.out.println();
         System.out.println("Login feito!!");
         main.OptionsBank();
+
     }
 }

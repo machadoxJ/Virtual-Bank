@@ -1,17 +1,17 @@
-package information;
+package model.register;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static information.RegistrationInfo.*;
+import static model.data.Registration.*;
 
-public class RegisterInfo {
+public class Registration {
 
     private final Scanner sc = new Scanner(System.in);
-    private final RegistrationInfo registrationinfo = new RegistrationInfo();
+    private final model.data.Registration registrationinfo = new model.data.Registration();
 
-    public void Register() {
+    public void register() {
         String name = "nome";
         String password = "senha";
         String registeredname = "register";
@@ -28,7 +28,7 @@ public class RegisterInfo {
             //Vai ver se o nome já foi registrado
             registrationinfo.setRegister("s");
             registrationinfo.setName(name);
-            DataInfo.readInfo();
+            model.saving.Saving.readData();
             registeredname = getName();
 
             System.out.println("Sua senha: ");
@@ -36,14 +36,15 @@ public class RegisterInfo {
 
         } while (Objects.equals(name, password) || Objects.equals(name, registeredname));
         registrationinfo.setName(name);
-        Age();
+        registrationinfo.setPassword(password);
+        age();
     }
-    public void Age() {
+    public void age() {
         boolean erroage = false;
         int age = 0;
         //Irá criar uma idade.
-        while (!erroage || age > 100 || age < 8) {
-            //Caso a idade for acima de 100 ou menor que 8.
+        while (!erroage || age > 80 || age < 8) {
+            //Caso a idade for acima de 80 ou menor que 8.
             if (age > 100) System.out.println("Você não pode colocar mais que 100 anos ou menos que 8 anos!!");
             //Caso coloque letra envez de numeros.
             try {
@@ -53,9 +54,9 @@ public class RegisterInfo {
             } catch (InputMismatchException e) { sc.nextLine(); System.out.println("Você só pode colocar Números!!"); }
         }
         registrationinfo.setAge(age);
-        Country();
+        country();
     }
-    public void Country() {
+    public void country() {
         boolean errocountry = false;
         String country = null;
         int p = 0;
@@ -70,9 +71,9 @@ public class RegisterInfo {
                 p = sc.nextInt();
                 errocountry = true;
                 switch (p) {
-                    case 1: country = "Brasil"; break;
-                    case 2: country = "Chile"; break;
-                    case 3: country = "Argentina"; break;
+                    case 1: country = "Brasil";
+                    case 2: country = "Chile";
+                    case 3: country = "Argentina";
                     default: System.out.println("Opção invalido!!");
                 }
             } catch (InputMismatchException e) { sc.nextLine(); System.out.println("Você só pode colocar Números!!"); }

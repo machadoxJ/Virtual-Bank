@@ -1,47 +1,47 @@
-package information;
+package model.saving;
 
-import program.Main;
-import program.Registration;
+import application.Program;
+import model.data.Bank;
+import model.data.Registration;
+import model.register.Loggin;
 
 import java.io.*;
 import java.util.Objects;
 
-import static information.BankInfo.getBalance;
-import static information.RegistrationInfo.*;
+import static model.data.Registration.*;
+import static model.data.Bank.*;
 
-public class DataInfo {
+public class Saving {
 
 
-    public static void readInfo() {
+    public static void readData() {
         File readdata = new File("D:\\dados\\"+ getName());
         String data;
 
         //Se o nome não existe no login.
         if (!readdata.exists() && getRegister().equals("n")) {
             System.out.println ("O Nome não existe!");
-            Registration registration = new Registration();
+            Loggin registration = new Loggin();
             registration.startLogin();
         }
 
         //Se o nome não existe na transferencia.
         else if (!readdata.exists() && getRegister().equals("b")) {
             System.out.println ("O Nome não existe ou foi cancelada/bloqueada!");
-            Main bank = new Main();
+            Program bank = new Program();
             bank.OptionsBank();
         }
 
         //Se o nome existir no registro.
         else if (!readdata.exists() && getRegister().equals("s")) {
             String register = "s";
-            RegistrationInfo registerinfo = new RegistrationInfo();
+            Registration registerinfo = new Registration();
             registerinfo.setName(register);
             return;
         }
 
         //Irá ler os dados e depois enviar para o codigo.
-        try {
-            FileReader readingdata = new FileReader(readdata);
-            BufferedReader readfile = new BufferedReader(readingdata);
+        try (BufferedReader readfile = new BufferedReader(new FileReader(readdata))){
             data = readfile.readLine();
             if (readdata.exists()) {
                 String[] vet = data.split(",");
@@ -52,33 +52,30 @@ public class DataInfo {
                 String linebalance = vet[4];
                 int age = Integer.parseInt(lineage);
                 double balance = Double.parseDouble(linebalance);
-                RegistrationInfo registerinfo = new RegistrationInfo();
-                BankInfo bankinfo = new BankInfo();
+                Registration registerinfo = new Registration();
+                Bank bankinfo = new Bank();
                 registerinfo.setName(name);
                 registerinfo.setPassword(password);
                 registerinfo.setAge(age);
                 registerinfo.setCountry(country);
                 bankinfo.setBalance(balance);
             }
-            readingdata.close();
         } catch (IOException ex) {
-            System.out.println("Impossivel achar esse nome na base de dados!");
+            Bank bankinfo = new Bank();
+            bankinfo.setAccount(false);
         }
     }
 
-    public static void recorddata() {
+    public static void recordData() {
         File createdata = new File("D:\\dados\\" + getName());
-        String readdate;
+        String savedate;
 
         //Irá ler dados e salvará fora do codigo.
-        try {
+        try (BufferedWriter date = new BufferedWriter(new FileWriter("D:\\dados\\" + getName()))){
             createdata.createNewFile();
-
-            FileWriter date = new FileWriter("D:\\dados\\" + getName());
-            BufferedWriter savingdata = new BufferedWriter(date);
             //Se a conta estiver bloqueada.
             if (Objects.equals(getBlock(), "y")) {
-                readdate = getNameBlock() +
+                savedate = getNameBlock() +
                         "," + getPassword() + getAge() + getNameBlock() + getAge() + getPassword() +
                         "," + getAge() +
                         "," + getCountry() +
@@ -86,19 +83,17 @@ public class DataInfo {
             }
             //Se for um salvamento normal.
             else {
-                readdate = getName() +
+                savedate = getName() +
                         "," + getPassword() +
                         "," + getAge() +
                         "," + getCountry() +
                         "," + getBalance();
             }
-            savingdata.write(readdate);
-            savingdata.newLine();
-            savingdata.close();
-            date.close();
+            date.write(savedate);
+            date.newLine();
 
         } catch (IOException ex) {
-            System.out.println("Impossivel salvar esse nome na base de dados!");
+            System.out.println("ERRO: Impossivel salvar esses dados na base de dados!");
             System.out.println(ex.getLocalizedMessage());
         }
     }
